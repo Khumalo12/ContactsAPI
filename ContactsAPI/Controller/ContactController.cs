@@ -64,9 +64,9 @@ namespace ContactsAPI.Controller
                 _repoWrapper.Contact.PostContacts(content.name, content.phonenumber, content.phonebook_id);
                 await _repoWrapper.SaveAsync();
 
-                return StatusCode(200, "Success");
+                return Ok(content);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500, "Internal server error");
             }
