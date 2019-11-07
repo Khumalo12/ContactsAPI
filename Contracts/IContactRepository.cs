@@ -10,6 +10,6 @@ namespace Contracts
     {
         Task<IEnumerable<Entry>> GetContacts(int phonebookId);
         Task<IEnumerable<Entry>> GetContacts(int phonebookId, string name);
-        Task<Entry> PostContacts(string name, string phonenumber, int phonebook_id);
+        void PostContacts(string name, string phonenumber, int phonebook_id);
     }
 }

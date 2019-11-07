@@ -20,7 +20,7 @@ namespace ContactsAPI.Controller
             _repoWrapper = repoWrapper;
         }
 
-       
+
         [HttpGet]
         [Route("Contacts")]
         public async Task<IActionResult> GetContacts(int phonebookId)
@@ -47,14 +47,29 @@ namespace ContactsAPI.Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostContacts(Phonebook content)
+        [Route("CreateContacts")]
+        public async Task<IActionResult> CreateContacts([FromBody] Entry content)
         {
-            var response = await _repoWrapper.Contact.PostContacts(content.name, content.phonenumber, content.phonebook_id);
-            if (response == null)
+            try
             {
-                return NotFound(response);
+                if (content == null)
+                {
+                    return BadRequest("content object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+                _repoWrapper.Contact.PostContacts(content.name, content.phonenumber, content.phonebook_id);
+                await _repoWrapper.SaveAsync();
+
+                return StatusCode(200, "Success");
             }
-            return Ok(response);
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
+            }
         }
     }
 }

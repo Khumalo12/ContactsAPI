@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Contracts
 {
@@ -8,5 +9,6 @@ namespace Contracts
     {
         IContactRepository Contact { get; }
         IPhonebookRepository Phonebook { get; }
+        Task SaveAsync();
     }
 }

@@ -29,9 +29,10 @@ namespace Repository
                 .ToListAsync();
         }
 
-        public Task<Entry> PostContacts(string name, string phonenumber, int phonebook_id)
+        public void PostContacts(string name, string phonenumber, int phonebook_id)
         {
-            throw new NotImplementedException();
+            var maxid = FindByCondition(x => x.Id > 0).Max(e => e.Id);
+            Create(new Entry { Id = maxid + 1, Name = name, Phonenumber = phonenumber, Phonebook_id = phonebook_id });
         }
     }
 }
